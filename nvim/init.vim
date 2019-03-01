@@ -57,7 +57,9 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'godlygeek/tabular'
 Plug 'mhinz/vim-mix-format'
+Plug 'rhysd/vim-clang-format'
 call plug#end()
+let g:Tlist_Ctags_Cmd='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
 "Mix
 let g:mix_format_on_save = 1
 "Guten
@@ -359,9 +361,7 @@ set mouse=a " Enable mouse usage (all modes) in terminals
 set shortmess+=c " don't give |ins-completion-menu| messages.
 
 " Colors
-" colorscheme base16-atelierdune
-colorscheme onedark
-let g:onedark_termcolors=256
+" let g:onedark_termcolors=256
 hi Normal ctermbg=NONE
 
 
@@ -393,3 +393,5 @@ if has("clipboard")
   endif
 endif
 
+colorscheme onedark
+colorscheme base16-atelierdune
