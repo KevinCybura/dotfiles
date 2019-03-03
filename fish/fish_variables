@@ -35,7 +35,7 @@ SETUVAR fish_color_host:normal
 SETUVAR fish_color_match:normal
 SETUVAR fish_color_normal:normal
 SETUVAR fish_color_operator:00a6b2
-SETUVAR fish_color_param:0087af
+SETUVAR fish_color_param:00d7af
 SETUVAR fish_color_quote:d75f00
 SETUVAR fish_color_redirection:0087af
 SETUVAR fish_color_search_match:ffff00

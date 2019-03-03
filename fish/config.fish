@@ -7,6 +7,11 @@ set -g theme_display_rust yes
 
 set -gx TERM xterm-256color
 set -U fish_user_abbreviations
+set -gx PATH "$HOME/.cargo/bin" $PATH;
+# For RLS
+# https://github.com/fish-shell/fish-shell/issues/2456
+setenv LD_LIBRARY_PATH (rustc +nightly --print sysroot)"/lib:$LD_LIBRARY_PATH"
+setenv RUST_SRC_PATH (rustc --print sysroot)"/lib/rustlib/src/rust/src"
 
 alias pmix='cd ~/Code/elx_playground && iex -S mix && cd -'
 alias vim nvim
@@ -115,13 +120,13 @@ function fish_user_key_bindings
 	end
 end
 
-set name 'KEVINCYBURA'
+set promt_name 'KEVINCYBURA'
 
 function fish_prompt
 	set_color brblack
 	echo -n "["(date "+%H:%M")"] "
 	set_color blue
-	echo -n "$name"
+	echo -n "$promt_name"
 	if [ $PWD != $HOME ]
 		set_color brblack
 		echo -n ':'

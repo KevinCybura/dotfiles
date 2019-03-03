@@ -18,8 +18,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-erlang/vim-erlang-runtime'
 Plug 'vim-erlang/vim-erlang-omnicomplete'
 "Elixir
-" Plug 'elixir-editors/vim-elixir'
-" Plug 'slashmili/alchemist.vim'
 Plug 'elixir-editors/vim-elixir',              { 'for': ['elixir', 'eelixir'] }
 Plug 'slashmili/alchemist.vim',             { 'for': ['elixir', 'eelixir'] }
 
@@ -28,11 +26,7 @@ Plug 'racer-rust/vim-racer'
 Plug 'rust-lang/rust.vim'
 " Youcompleteme
 Plug 'valloric/youcompleteme'
-" " Track the engine.
-" Plug 'SirVer/ultisnips'
 
-" Snippets are separated from the engine. Add this if you want them:
-" Plug 'honza/vim-snippets'
 
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -42,30 +36,47 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'flazz/vim-colorschemes'
 Plug 'scrooloose/nerdtree'
 " Plug 'easymotion/vim-easymotion'
-" Plug 'yggdroot/indentline'
 " Plug 'airblade/vim-gitgutter'
-" Plug 'hzchirs/vim-material'
-" Plug 'kaicataldo/material.vim'
-" Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'scrooloose/nerdcommenter'
-Plug 'jiangmiao/auto-pairs'
-Plug 'joshdick/onedark.vim'
+" Plug 'jiangmiao/auto-pairs'
 Plug 'sheerun/vim-polyglot'
-Plug 'luochen1990/rainbow'
 Plug 'neomake/neomake'
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'godlygeek/tabular'
 Plug 'mhinz/vim-mix-format'
 Plug 'rhysd/vim-clang-format'
 call plug#end()
+
+if has('nvim')
+    set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+    set inccommand=nosplit
+    noremap <C-q> :confirm qall<CR>
+end
+
+if !has('gui_running')
+  set t_Co=256
+endif
+
+"Base16
+let base16colorspace=256
+let g:base16_shell_path="~/.config/base16-shell/scripts"
 let g:Tlist_Ctags_Cmd='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
+" LanguageClient
+" Required for operations modifying multiple buffers like rename.
+set hidden
+
+" \ 'rust': ['env', 'CARGO_TARGET_DIR=/data/jon/cargo-target/rls', 'rls'],
+" \ 'rust': [ '~/.cargo/bin/rls', 'rls'],
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+    \ 'python': ['/usr/local/bin/pyls'],
+    \ 'elixir': ['/usr/local/bin/elixir']
+    \ }
 "Mix
 let g:mix_format_on_save = 1
-"Guten
-let g:gutentags_cache_dir = '~/.cache/gutentags'
 " Rainbow
-let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<leader>l"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
@@ -116,9 +127,6 @@ let g:tagbar_type_rust = {
         \'i:impls,trait implementations',
     \]
     \}
-"Indent
-" let g:indentLine_color_term = 239
-" let g:indentLine_char = '▏'
 
 " EZ motion
 " map <Leader> <Plug>(easymotion-prefix)
@@ -143,29 +151,12 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 
 "End
-if has('nvim')
-    set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-    set inccommand=nosplit
-    noremap <C-q> :confirm qall<CR>
-end
 
 if executable('rg')
 	set grepprg=rg\ --no-heading\ --vimgrep
 	set grepformat=%f:%l:%c:%m
 endif
-" LanguageClient
-" Required for operations modifying multiple buffers like rename.
-set hidden
 
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['env', 'CARGO_TARGET_DIR=/data/jon/cargo-target/rls', 'rls'],
-    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-    \ 'python': ['/usr/local/bin/pyls'],
-    \ 'elixir': ['/usr/local/bin/elixir']
-    \ }
-
-    " \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
@@ -190,7 +181,6 @@ nmap <leader>q :q<CR>
 
 
 noremap <leader>t :FZF<CR>
-" <leader>s for Rg search
 noremap <leader>s :Rg<CR>
 let g:fzf_layout = { 'down': '~20%' }
 command! -bang -nargs=* Rg
@@ -258,17 +248,16 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " racer + rust
 " https://github.com/rust-lang/rust.vim/issues/192
-let g:rustfmt_command = "rustfmt +nightly"
+let g:racer_cmd = "~/.cargo/bin/racer"
+let g:rustfmt_command = "rustfmt"
 let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
-let g:rustfmt_fail_silently = 0
+let g:rustfmt_fail_silently = 1
 let g:rust_clip_command = 'xclip -selection clipboard'
-"let g:racer_cmd = "/usr/bin/racer"
-"let g:racer_experimental_completer = 1
-let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
+let g:racer_experimental_completer = 1
+" let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
+let g:ycm_rust_src_path = $RUST_SRC_PATH
 
-" let g:airline_theme='base16_atelierdune'
-let g:airline_theme='onedark'
 " =============================================================================
 " # Editor settings
 " =============================================================================
@@ -281,10 +270,19 @@ set noshowmode
 set hidden
 set nowrap
 set nojoinspaces
-if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
- " screen does not (yet) support truecolor
+" Enable true color 启用终端24位色
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
+
+" if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
+"  " screen does not (yet) support truecolor
+"  set t_8f=^[[38;2;%lu;%lu;%lum  " Needed in tmux
+" set t_8b=^[[48;2;%lu;%lu;%lum  " Ditto
+"   set termguicolors
+" endif
 
 " Settings needed for .lvimrc
 set exrc
@@ -361,21 +359,22 @@ set mouse=a " Enable mouse usage (all modes) in terminals
 set shortmess+=c " don't give |ins-completion-menu| messages.
 
 " Colors
-" let g:onedark_termcolors=256
+set background=dark
+colorscheme base16-atelierdune
 hi Normal ctermbg=NONE
 
 
-if (has("nvim"))
-  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
+" if (has("nvim"))
+"   "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+"   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" endif
 
-"For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-"Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-" < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-if (has("termguicolors"))
-  set termguicolors
-endif
+" "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+" "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+" " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+" if (has("termguicolors"))
+"   set termguicolors
+" endif
 
 " Show those damn hidden characters
 " Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
@@ -393,5 +392,4 @@ if has("clipboard")
   endif
 endif
 
-colorscheme onedark
-colorscheme base16-atelierdune
+" set term=screen-256color
