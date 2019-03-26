@@ -44,26 +44,27 @@ Plug 'scrooloose/nerdtree'
 " Plug 'easymotion/vim-easymotion'
 " Plug 'yggdroot/indentline'
 " Plug 'airblade/vim-gitgutter'
-" Plug 'hzchirs/vim-material'
-" Plug 'kaicataldo/material.vim'
-" Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'scrooloose/nerdcommenter'
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
 Plug 'joshdick/onedark.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'luochen1990/rainbow'
 Plug 'neomake/neomake'
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'godlygeek/tabular'
 Plug 'mhinz/vim-mix-format'
+Plug 'plasticboy/vim-markdown'
+Plug 'dag/vim-fish'
+"C++
+
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'rhysd/vim-clang-format'
 call plug#end()
 "Mix
 let g:mix_format_on_save = 1
 "Guten
-let g:gutentags_cache_dir = '~/.cache/gutentags'
 " Rainbow
-let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+" let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<leader>l"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
@@ -114,9 +115,6 @@ let g:tagbar_type_rust = {
         \'i:impls,trait implementations',
     \]
     \}
-"Indent
-" let g:indentLine_color_term = 239
-" let g:indentLine_char = '▏'
 
 " EZ motion
 " map <Leader> <Plug>(easymotion-prefix)
@@ -188,7 +186,6 @@ nmap <leader>q :q<CR>
 
 
 noremap <leader>t :FZF<CR>
-" <leader>s for Rg search
 noremap <leader>s :Rg<CR>
 let g:fzf_layout = { 'down': '~20%' }
 command! -bang -nargs=* Rg
@@ -261,12 +258,12 @@ let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
 let g:rust_clip_command = 'xclip -selection clipboard'
-"let g:racer_cmd = "/usr/bin/racer"
-"let g:racer_experimental_completer = 1
+let g:racer_cmd = "/usr/bin/racer"
+let g:racer_experimental_completer = 1
 let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
 
-" let g:airline_theme='base16_atelierdune'
-let g:airline_theme='onedark'
+let g:airline_theme='base16_atelierdune'
+" let g:airline_theme='onedark'
 " =============================================================================
 " # Editor settings
 " =============================================================================
@@ -279,11 +276,15 @@ set noshowmode
 set hidden
 set nowrap
 set nojoinspaces
-if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
- " screen does not (yet) support truecolor
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
 
+" set term=screen-256color
+highlight Normal ctermbg=NONE
+highlight nonText ctermbg=NONE
 " Settings needed for .lvimrc
 set exrc
 set secure
@@ -359,8 +360,9 @@ set mouse=a " Enable mouse usage (all modes) in terminals
 set shortmess+=c " don't give |ins-completion-menu| messages.
 
 " Colors
+set background=dark
 " colorscheme base16-atelierdune
-colorscheme onedark
+colorscheme deus
 let g:onedark_termcolors=256
 hi Normal ctermbg=NONE
 
@@ -392,4 +394,18 @@ if has("clipboard")
     set clipboard+=unnamedplus
   endif
 endif
+
+"C++
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+filetype plugin indent on
+" show existing tab with 4 spaces width
+set tabstop=4
+" when indenting with '>', use 4 spaces width
+set shiftwidth=4
+" On pressing tab, insert 4 spaces
+set expandtab
+
+autocmd FileType c ClangFormatAutoEnable
 
