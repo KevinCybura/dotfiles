@@ -249,7 +249,7 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 " racer + rust
 " https://github.com/rust-lang/rust.vim/issues/192
 let g:racer_cmd = "~/.cargo/bin/racer"
-let g:rustfmt_command = "rustfmt"
+let g:rustfmt_command = "rustfmt +nightly"
 let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 1
@@ -360,7 +360,9 @@ set shortmess+=c " don't give |ins-completion-menu| messages.
 
 " Colors
 set background=dark
-colorscheme base16-atelierdune
+" colorscheme base16-atelierdune
+" colorscheme molokai
+colorscheme deus
 hi Normal ctermbg=NONE
 
 

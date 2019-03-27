@@ -73,11 +73,11 @@ set FORTUNES off/atheism off/debian off/linux off/privates $FORTUNES
 set FORTUNES off/religion off/vulgarity $FORTUNES
 
 # Fish git prompt
-set __fish_git_prompt_showuntrackedfiles 'yes'
-set __fish_git_prompt_showdirtystate 'yes'
-set __fish_git_prompt_showstashstate ''
-set __fish_git_prompt_showupstream 'none'
-set -g fish_prompt_pwd_dir_length 3
+# set __fish_git_prompt_showuntrackedfiles 'yes'
+# set __fish_git_prompt_showdirtystate 'yes'
+# set __fish_git_prompt_showstashstate ''
+# set __fish_git_prompt_showupstream 'none'
+# set -g fish_prompt_pwd_dir_length 3
 
 # colored man output
 # from http://linuxtidbits.wordpress.com/2009/03/23/less-colors-for-man-pages/
@@ -103,8 +103,8 @@ set FISH_CLIPBOARD_CMD "cat"
 
 # Base16 Shell
 if status --is-interactive
-#    eval sh $HOME/.config/base16-shell/scripts/base16-atelier-dune.sh
-    eval sh $HOME/.config/base16-shell/scripts/base16-tomorrow-night.sh
+   eval sh $HOME/.config/base16-shell/scripts/base16-atelier-dune.sh
+    # eval sh $HOME/.config/base16-shell/scripts/base16-tomorrow-night.sh
     
 end
 
@@ -122,22 +122,22 @@ end
 
 set promt_name 'KEVINCYBURA'
 
-function fish_prompt
-	set_color brblack
-	echo -n "["(date "+%H:%M")"] "
-	set_color blue
-	echo -n "$promt_name"
-	if [ $PWD != $HOME ]
-		set_color brblack
-		echo -n ':'
-		set_color yellow
-		echo -n (basename $PWD)
-	end
-	set_color green
-	printf '%s ' (__fish_git_prompt)
-	set_color red
-	echo -n '| '
-	set_color normal
-end
+# function fish_prompt
+#         set_color brblack
+#         echo -n "["(date "+%H:%M")"] "
+#         set_color blue
+#         echo -n "$promt_name"
+#         if [ $PWD != $HOME ]
+#                 set_color brblack
+#                 echo -n ':'
+#                 set_color yellow
+#                 echo -n (basename $PWD)
+#         end
+#         set_color green
+#         printf '%s ' (__fish_git_prompt)
+#         set_color red
+#         echo -n '| '
+#         set_color normal
+# end
 
 set -xg LLVM_DIR /usr/local/Cellar/llvm/7.0.1/lib/cmake/llvm/

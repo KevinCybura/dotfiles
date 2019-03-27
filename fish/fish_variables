@@ -21,9 +21,10 @@ SETUVAR _fish_abbr_lll_3D_ls:\x2dla
 SETUVAR _fish_abbr_ls:exa
 SETUVAR _fish_abbr_print_3D_lp:\x2dh\x20cups\x2ecsail\x2emit\x2eedu\x20\x2dd\x20xerox9\x20\x2doDuplex\x3dDuplexNoTumble\x20\x2doStapleLocation\x3dSinglePortrait
 SETUVAR _fish_abbr_vimdiff_3D_nvim:\x2dd
+SETUVAR chain_links:chain\x2elinks\x2eroot\x1echain\x2elinks\x2ejobs\x1echain\x2elinks\x2epwd\x1echain\x2elinks\x2evcs_branch\x1echain\x2elinks\x2evcs_dirty\x1echain\x2elinks\x2evcs_stashed
 SETUVAR fish_color_autosuggestion:555
 SETUVAR fish_color_cancel:normal
-SETUVAR fish_color_command:00af87
+SETUVAR fish_color_command:00d787
 SETUVAR fish_color_comment:d75f00
 SETUVAR fish_color_cwd:008000
 SETUVAR fish_color_cwd_root:800000
@@ -48,6 +49,5 @@ SETUVAR fish_key_bindings:fish_default_key_bindings
 SETUVAR fish_pager_color_completion:normal
 SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:white\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
-SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_user_abbreviations:l\x3dexa\x1els\x3dexa\x1ell\x3dexa\x20\x2dl\x1elll\x3dexa\x20\x2dla
 SETUVAR fish_user_paths:/Users/kevincybura/\x2efzf/bin
