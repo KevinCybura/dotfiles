@@ -1,1 +1,1 @@
-/Users/kevincybura/.local/share/omf/themes/scorphish/fish_prompt.fish
+/Users/kevincybura/.local/share/omf/themes/edan/fish_prompt.fish
